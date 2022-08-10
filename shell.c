@@ -149,6 +149,7 @@ int main(int argc, char *argv[], char *envp[])
 
 		call_execve(args[0], args);
 	}
-
+	free(args);
+	free(string);
 	return (0);
 }

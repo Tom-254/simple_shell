@@ -1,2 +1,4 @@
 *.sh
 hsh
+tests.c
+a.out

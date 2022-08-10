@@ -1,19 +1,6 @@
 #include "shell.h"
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-
-/**
  * _puts - prints out a string, followed by a new line
  *
  * @str: the string to be printed out
@@ -33,50 +20,29 @@ void _puts(char *str)
 }
 
 /**
- * call_execve - calls the execve function
- * to execute the program passed
+ * **realloc_exec_path - reallocates
+ * memory to an existing string array
  *
- * @program: the name of the executable to be called and executed
- * @args: argument passed;
- * Return: an integer depending on the
- * exit code of the executed command showing error or not
+ * @exec_path: the original string array for memory reallocation
+ * @size: the original string array size
+ * Return: a new resized string array
  */
 
-int call_execve(char *program, char **args)
+char **realloc_exec_path(char **exec_path, size_t size)
 {
-	pid_t process_id;
-	int wait_status;
-	int status_code;
+	char **new_exec_path;
+	size_t i;
 
-	status_code = 0;
+	new_exec_path = malloc((size + 10) * sizeof(char *));
 
-	process_id = fork();
+	if (new_exec_path == NULL)
+		return (NULL);
 
-	if (process_id == -1)
-	{
-		perror("Error");
-		return (1);
-	}
+	for (i = 0; i < size + 10; i++)
+		new_exec_path[i] = exec_path[i];
 
-	if (process_id == 0)
-	{
-		if (execve(program, args, NULL) == -1)
-		{
-			perror(program);
-			exit(2);
-		}
-	}
-	else
-	{
-		wait(&wait_status);
-
-		if (WIFEXITED(wait_status))
-		{
-			status_code = WEXITSTATUS(wait_status);
-		}
-	}
-
-	return (status_code);
+	free(exec_path);
+	return (new_exec_path);
 }
 
 /**
@@ -84,15 +50,21 @@ int call_execve(char *program, char **args)
  * commands in the program for them to be run
  *
  * @str: a pointer to the string agument passed by user
- * Return: an integer
+ * @execuption_path: a triple pointer to the
+ * programs execution path
  * @if_terminal: an integer showing if the commands were
  * passed from the terminal
+ * @envp: environment variables
+ * Return: an integer
  */
 
-int take_input(char **str, int if_terminal)
+int take_input(char **str, char ***execuption_path,
+	int if_terminal, char **envp)
 {
 	size_t size;
 	ssize_t chars_read;
+
+	(void)envp;
 
 	size = 0;
 
@@ -103,7 +75,10 @@ int take_input(char **str, int if_terminal)
 
 	if (chars_read < 0)
 	{
+		_puts("\n");
 		free(*(str));
+		free(*(execuption_path));
+		free_env(envp);
 		exit(0);
 	}
 
@@ -129,36 +104,44 @@ int take_input(char **str, int if_terminal)
 int main(int argc, char *argv[], char *envp[])
 {
 	char *string;
-	int if_terminal, argument_count;
+	char **execution_path;
 	char **args;
-
+	int array_size, argument_count, if_terminal, command_count;
 
 	(void)argc;
-	(void)argv;
-	(void)envp;
-
-	if_terminal = isatty(fileno(stdin));
+	string = NULL;
+	execution_path = NULL;
+	array_size = 10;
 	argument_count = 0;
+	if_terminal = isatty(fileno(stdin));
+	command_count = 0;
 
+	envp = create_env(envp);
+
+	execution_path = create_execution_path(&array_size, environ);
 	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
-		if (if_terminal)
-		{
-			_puts("($) ");
-		}
-		string = getinput();
-		if (string[0] == '\0')
+		command_count++;
+		if (take_input(&string, &execution_path, if_terminal, envp))
 			continue;
 
 		args = create_args(string, &argument_count);
 
-		call_execve(args[0], args);
-
+		if (check_run_if_builtin(args, argument_count, string,
+			execution_path, envp) == -1)
+		{
+			if (execute_args(args, execution_path, array_size, envp, argv[0],
+						command_count) == 1)
+			{
+				dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", argv[0],
+						command_count, args[0]);
+			}
+		}
 		free(args);
 		free(string);
 	}
-	_puts("\n");
-	free(string);
+
 	return (0);
 }
+

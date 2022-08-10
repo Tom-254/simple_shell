@@ -131,6 +131,10 @@ int main(int argc, char *argv[], char *envp[])
 	char *string;
 	int if_terminal, argument_count;
 	char **args;
+	size_t size;
+	ssize_t chars_read;
+
+	size = 0;
 
 
 	(void)argc;
@@ -143,13 +147,28 @@ int main(int argc, char *argv[], char *envp[])
 	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
-		if (take_input(&string, if_terminal))
-			continue;
-		args = create_args(string, &argument_count);
+		if (if_terminal)
+			_puts("($) ");
 
-		call_execve(args[0], args);
+		chars_read = getline(&string, &size, stdin);
+		if (chars_read == 0)
+		{
+			continue;
+		}
+		else if (chars_read == -1)
+		{
+			_puts("\n");
+			break;
+		}
+		else
+		{
+			args = create_args(string, &argument_count);
+
+			call_execve(args[0], args);
+			free(args);
+		}
 	}
-	free(args);
+
 	free(string);
 	return (0);
 }

@@ -42,7 +42,7 @@ void _puts(char *str)
  * exit code of the executed command showing error or not
  */
 
-int call_execve(char *program, char *args)
+int call_execve(char *program, char **args)
 {
 	pid_t process_id;
 	int wait_status;
@@ -130,19 +130,25 @@ int take_input(char **str, int if_terminal)
 int main(int argc, char *argv[], char *envp[])
 {
 	char *string;
-	int if_terminal;
+	int if_terminal, argument_count;
+	char **args;
+
 
 	(void)argc;
 	(void)argv;
 	(void)envp;
 
 	if_terminal = isatty(fileno(stdin));
+	argument_count = 0;
 
 	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		if (take_input(&string, if_terminal))
 			continue;
+		args = create_args(string, &argument_count);
+
+		call_execve(args[0], args);
 	}
 
 	return (0);

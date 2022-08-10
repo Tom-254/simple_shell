@@ -13,5 +13,7 @@
 void _puts(char *str);
 int _putchar(char c);
 int take_input(char **str, int if_terminal);
+char **create_args(char *string, int *argument_count);
+char **realloc_exec_path(char **exec_path, size_t size);
 
 #endif

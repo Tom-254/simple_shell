@@ -154,9 +154,11 @@ int main(int argc, char *argv[], char *envp[])
 		args = create_args(string, &argument_count);
 
 		call_execve(args[0], args);
+
+		free(args);
+		free(string);
 	}
 	_puts("\n");
-	free(args);
 	free(string);
 	return (0);
 }

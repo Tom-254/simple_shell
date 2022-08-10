@@ -131,10 +131,6 @@ int main(int argc, char *argv[], char *envp[])
 	char *string;
 	int if_terminal, argument_count;
 	char **args;
-	size_t size;
-	ssize_t chars_read;
-
-	size = 0;
 
 
 	(void)argc;
@@ -148,27 +144,19 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		if (if_terminal)
+		{
 			_puts("($) ");
-
-		chars_read = getline(&string, &size, stdin);
-		if (chars_read == 0)
-		{
+		}
+		string = getinput();
+		if (string[0] == '\0')
 			continue;
-		}
-		else if (chars_read == -1)
-		{
-			_puts("\n");
-			break;
-		}
-		else
-		{
-			args = create_args(string, &argument_count);
 
-			call_execve(args[0], args);
-			free(args);
-		}
+		args = create_args(string, &argument_count);
+
+		call_execve(args[0], args);
 	}
-
+	_puts("\n");
+	free(args);
 	free(string);
 	return (0);
 }

@@ -33,6 +33,53 @@ void _puts(char *str)
 }
 
 /**
+ * call_execve - calls the execve function
+ * to execute the program passed
+ *
+ * @program: the name of the executable to be called and executed
+ * @args: argument passed;
+ * Return: an integer depending on the
+ * exit code of the executed command showing error or not
+ */
+
+int call_execve(char *program, char *args)
+{
+	pid_t process_id;
+	int wait_status;
+	int status_code;
+
+	status_code = 0;
+
+	process_id = fork();
+
+	if (process_id == -1)
+	{
+		perror("Error");
+		return (1);
+	}
+
+	if (process_id == 0)
+	{
+		if (execve(program, args, NULL) == -1)
+		{
+			perror(program);
+			exit(2);
+		}
+	}
+	else
+	{
+		wait(&wait_status);
+
+		if (WIFEXITED(wait_status))
+		{
+			status_code = WEXITSTATUS(wait_status);
+		}
+	}
+
+	return (status_code);
+}
+
+/**
  * take_input - waits for the user to enter
  * commands in the program for them to be run
  *

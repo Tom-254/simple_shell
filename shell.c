@@ -103,7 +103,6 @@ int take_input(char **str, int if_terminal)
 
 	if (chars_read < 0)
 	{
-		_puts("\n");
 		free(*(str));
 		exit(0);
 	}

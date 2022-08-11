@@ -104,8 +104,7 @@ int _atoi(char *str)
 
 	if (str[0] == '-')
 	{
-		sign = -1;
-		i++;
+		return (-1);
 	}
 
 	for (; str[i] != '\0'; ++i)

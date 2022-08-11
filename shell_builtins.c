@@ -44,6 +44,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		free_env(envp);
 		exit(EXIT_SUCCESS);
 	}
+
 	while (args[1][i])
 	{
 		if (_isalpha(args[1][i++]) != 0)
@@ -54,6 +55,11 @@ void exit_shell(char **args, char *string, char **execution_path,
 		else
 		{
 			statue = _atoi(args[1]);
+			if (statue < 0)
+			{
+				print_error(shell_name, command_count, args, 3);
+				break;
+			}
 			free(args);
 			free(string);
 			free(execution_path);

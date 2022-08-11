@@ -42,7 +42,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		free(string);
 		free(execution_path);
 		free_env(envp);
-		exit(errno);
+		exit(EXIT_SUCCESS);
 	}
 	while (args[1][i])
 	{

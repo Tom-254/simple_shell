@@ -89,10 +89,10 @@ int _isalpha(int c)
 
 /**
  * _atoi - convert to a int
- * @s:string
+ * @str:string
  * Return:int
  */
-int _atoi(char *s)
+int _atoi(char *str)
 {
 	int res, sign, i;
 

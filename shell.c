@@ -55,17 +55,18 @@ char **realloc_exec_path(char **exec_path, size_t size)
  * @if_terminal: an integer showing if the commands were
  * passed from the terminal
  * @envp: environment variables
+ * @status: program execution exit status
  * Return: nothing
  */
 
 void take_input(char **str, char **execuption_path,
-	int if_terminal, char **envp)
+	int if_terminal, char **envp, int status)
 {
 
 	if (if_terminal)
 		_puts("($) ");
 
-	*str = getinput(execuption_path, envp);
+	*str = getinput(execuption_path, envp, status);
 }
 
 /**
@@ -82,14 +83,14 @@ int main(int argc, char *argv[], char *envp[])
 	char *string;
 	char **execution_path;
 	char **args;
-	int array_size, argument_count, if_terminal, command_count;
+	int array_size, argument_count, if_terminal, command_count, status;
 
 	(void)argc;
-	(void)command_count;
 	array_size = 10;
 	argument_count = 0;
 	if_terminal = isatty(fileno(stdin));
 	command_count = 0;
+	status = 0;
 
 	envp = create_env(envp);
 
@@ -98,7 +99,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		command_count++;
-		take_input(&string, execution_path, if_terminal, envp);
+		take_input(&string, execution_path, if_terminal, envp, status);
 		if (string[0] == '\0')
 			continue;
 
@@ -107,8 +108,9 @@ int main(int argc, char *argv[], char *envp[])
 		if (check_run_if_builtin(args, argument_count, string,
 			execution_path, envp, argv[0], command_count) == -1)
 		{
-			if (execute_args(args, execution_path, array_size, envp, argv[0],
-						command_count) == 1)
+			status = execute_args(args, execution_path, array_size, envp, argv[0],
+						command_count);
+			if (status == 1)
 				print_error(argv[0], command_count, args, 1);
 		}
 		free(args);

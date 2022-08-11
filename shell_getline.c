@@ -126,9 +126,10 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * @execuption_path: a triple pointer to the
  * programs execution path
  * @envp: environment variables
+ * @status: exit_p status
  * Return: user input
  */
-char *getinput(char **execuption_path, char **envp)
+char *getinput(char **execuption_path, char **envp, int status)
 {
 	int i, buffsize = 1024, rd;
 	char c = 0;
@@ -150,7 +151,7 @@ char *getinput(char **execuption_path, char **envp)
 			free(execuption_path);
 			free_env(envp);
 			free(buff);
-			exit(EXIT_SUCCESS);
+			exit(status);
 		}
 
 		buff[i] = c;

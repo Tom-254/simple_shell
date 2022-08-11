@@ -54,7 +54,6 @@ void exit_shell(char **args, char *string, char **execution_path,
 		else
 		{
 			statue = _atoi(args[1]);
-			printf("statue %d\n", statue);
 			free(args);
 			free(string);
 			free(execution_path);

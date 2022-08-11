@@ -154,8 +154,6 @@ int execute_args(char **args, char **execution_path, int array_size,
 		{
 			status = call_execve(args[0], args, envp,
 				shell_name, command_count);
-
-			status = 0;
 		}
 	}
 	else
@@ -167,7 +165,6 @@ int execute_args(char **args, char **execution_path, int array_size,
 			{
 				status = call_execve(exec_p, args, envp,
 						shell_name, command_count);
-				status = 0;
 				free(exec_p);
 				break;
 			}

@@ -38,7 +38,7 @@ int execute_args(char **args, char **execution_path, int array_size,
 char **create_args(char *string, int *argument_count);
 
 void take_input(char **str, char **execuption_path,
-	int if_terminal, char **envp);
+	int if_terminal, char **envp, int status);
 void _puts(char *str);
 int _putchar(char c);
 void print_environment(char **envp);
@@ -49,7 +49,7 @@ char **create_env(char **env);
 void free_env(char **env);
 char *_strstr(char *haystack, char *needle);
 char *create_path(char **envp);
-char *getinput(char **execuption_path, char **envp);
+char *getinput(char **execuption_path, char **envp, int status);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void print_error(char *shellname, int command_count, char **args, int where);
 char *_itoa(unsigned int n);

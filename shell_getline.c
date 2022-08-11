@@ -76,6 +76,7 @@ void print_error(char *shellname, int command_count, char **args, int where)
 	{
 		_puts(args[0]);
 		_puts(": not found");
+		_puts("\n");
 	}
 }
 
@@ -144,6 +145,12 @@ char *getinput(char **execuption_path, char **envp, int status)
 
 	for (i = 0; c != EOF && c != '\n'; i++)
 	{
+		if (i >= buffsize)
+		{
+			buff = _realloc(buff, buffsize, buffsize + 1);
+			if (buff == NULL)
+				return (NULL);
+		}
 		fflush(stdin);
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == 0)
@@ -158,13 +165,6 @@ char *getinput(char **execuption_path, char **envp, int status)
 		if (buff[0] == '\n')
 		{
 			free(buff);
-			return ("\0");
-		}
-		if (i >= buffsize)
-		{
-			buff = _realloc(buff, buffsize, buffsize + 1);
-			if (buff == NULL)
-				return (NULL);
 		}
 	}
 	buff[i] = '\0';

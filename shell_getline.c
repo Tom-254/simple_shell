@@ -68,7 +68,7 @@ void print_error(char *shellname, int command_count, char **args, int where)
 	}
 	else if (where == 3)
 	{
-		_puts(": Illegal argument: ");
+		_puts("Illegal number: ");
 		_puts(args[1]);
 	}
 	else

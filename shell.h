@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/sysmacros.h>
+#include <errno.h>
 
 extern char **environ;
 

@@ -42,7 +42,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		free(string);
 		free(execution_path);
 		free_env(envp);
-		exit(EXIT_SUCCESS);
+		exit(errno);
 	}
 	while (args[1][i])
 	{
@@ -54,6 +54,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		else
 		{
 			statue = _atoi(args[1]);
+			printf("statue %d\n", statue);
 			free(args);
 			free(string);
 			free(execution_path);

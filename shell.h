@@ -41,7 +41,7 @@ void take_input(char **str, char **execuption_path,
 	int if_terminal, char **envp, int status);
 void _puts(char *str);
 int _putchar(char c);
-void print_environment(char **envp);
+void print_environment(void);
 int check_run_if_builtin(char **args, int argument_count, char *string,
 	char **execution_path, char **envp, char *shell_name,
 		int command_count);

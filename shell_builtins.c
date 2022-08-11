@@ -28,11 +28,12 @@ void free_env(char **env)
  * @shell_name: the name of the shell
  * @command_count: count of commands passed
  * into the shell program since its initialization
+ * @status: shell exit status
  * Return: nothing
  */
 
 void exit_shell(char **args, char *string, char **execution_path,
-	char **envp, char *shell_name, int command_count)
+	char **envp, char *shell_name, int command_count, int status)
 {
 	int statue, i = 0;
 
@@ -42,7 +43,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		free(string);
 		free(execution_path);
 		free_env(envp);
-		exit(EXIT_SUCCESS);
+		exit(status);
 	}
 
 	while (args[1][i])
@@ -128,13 +129,14 @@ void print_environment(char **envp)
  * @shell_name: the name of the shell
  * @command_count: count of commands passed
  * into the shell program since its initialization
+ * @status: exit status
  *
  * Return: nothing
  */
 
 int check_run_if_builtin(char **args, int argument_count, char *string,
 	char **execution_path, char **envp, char *shell_name,
-		int command_count)
+		int command_count, int status)
 {
 	int built_in_total, built_in_to_exec, i;
 	char *built_ins[2];
@@ -162,7 +164,8 @@ int check_run_if_builtin(char **args, int argument_count, char *string,
 		print_environment(envp);
 		break;
 	case 1:
-		exit_shell(args, string, execution_path, envp, shell_name, command_count);
+		exit_shell(args, string, execution_path, envp,
+			shell_name, command_count, status);
 		break;
 	default:
 		break;

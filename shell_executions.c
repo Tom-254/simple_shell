@@ -170,7 +170,6 @@ int execute_args(char **args, char **execution_path, int array_size,
 			}
 			free(exec_p);
 		}
-		printf("%d\n", errno);
 	}
 	return (status);
 }

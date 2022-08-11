@@ -104,14 +104,16 @@ int main(int argc, char *argv[], char *envp[])
 			continue;
 
 		args = create_args(string, &argument_count);
-
 		if (check_run_if_builtin(args, argument_count, string,
-			execution_path, envp, argv[0], command_count) == -1)
+			execution_path, envp, argv[0], command_count, status) == -1)
 		{
 			status = execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count);
 			if (status == 1)
+			{
 				print_error(argv[0], command_count, args, 1);
+				status = 2;
+			}
 		}
 		free(args);
 		free(string);

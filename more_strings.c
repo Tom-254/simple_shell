@@ -11,3 +11,21 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
+
+/**
+ * free - Read The Input By User From Stdin
+ * @execuption_path: a triple pointer to the
+ * programs execution path
+ * @envp: environment variables
+ * @buff: string buffer
+ * @status: exit_p status
+ * Return: user input
+ */
+void free_buff(char **execuption_path, char **envp,
+	char *buff, int status)
+{
+	free(execuption_path);
+	free_env(envp);
+	free(buff);
+	exit(status);
+}

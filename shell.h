@@ -61,5 +61,8 @@ void exit_shell(char **args, char *string, char **execution_path,
 
 int _atoi(char *s);
 
+void free_buff(char **execuption_path, char **envp,
+	char *buff, int status);
+
 #endif
 

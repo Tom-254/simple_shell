@@ -100,7 +100,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		command_count++;
 		take_input(&string, execution_path, if_terminal, envp, status);
-		if (string[0] == '\n')
+		if (string[0] == '\0')
 			continue;
 
 		args = create_args(string, &argument_count);

@@ -34,7 +34,7 @@ void exit_shell(char **args, char *string, char **execution_path, char **envp)
 	free(string);
 	free(execution_path);
 	free_env(envp);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 /**

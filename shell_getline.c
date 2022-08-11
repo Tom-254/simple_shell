@@ -66,6 +66,12 @@ void print_error(char *shellname, int command_count, char **args, int where)
 	{
 		perror(args[0]);
 	}
+	else if (where == 3)
+	{
+		_puts(": Illegal argument: ");
+		_puts(args[1]);
+		_puts("\n");
+	}
 	else
 	{
 		_puts(args[0]);

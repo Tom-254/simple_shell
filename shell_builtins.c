@@ -25,16 +25,42 @@ void free_env(char **env)
  * the potential directory location for the
  * command to be executed
  * @envp: environment variables
+ * @shell_name: the name of the shell
+ * @command_count: count of commands passed
+ * into the shell program since its initialization
  * Return: nothing
  */
 
-void exit_shell(char **args, char *string, char **execution_path, char **envp)
+void exit_shell(char **args, char *string, char **execution_path,
+	char **envp, char *shell_name, int command_count)
 {
-	free(args);
-	free(string);
-	free(execution_path);
-	free_env(envp);
-	exit(EXIT_SUCCESS);
+	int statue, i = 0;
+
+	if (args[1] == NULL)
+	{
+		free(args);
+		free(string);
+		free(execution_path);
+		free_env(envp);
+		exit(EXIT_SUCCESS);
+	}
+	while (args[1][i])
+	{
+		if (_isalpha(args[1][i++]) != 0)
+		{
+			print_error(shell_name, command_count, args, 3);
+			break;
+		}
+		else
+		{
+			statue = _atoi(args[1]);
+			free(args);
+			free(string);
+			free(execution_path);
+			free_env(envp);
+			exit(statue);
+		}
+	}
 }
 
 /**
@@ -92,12 +118,16 @@ void print_environment(char **envp)
  * @execution_path: an array of strings containing
  * the potential directory location for the
  * @envp: environment_varibles
+ * @shell_name: the name of the shell
+ * @command_count: count of commands passed
+ * into the shell program since its initialization
  *
  * Return: nothing
  */
 
 int check_run_if_builtin(char **args, int argument_count, char *string,
-	char **execution_path, char **envp)
+	char **execution_path, char **envp, char *shell_name,
+		int command_count)
 {
 	int built_in_total, built_in_to_exec, i;
 	char *built_ins[2];
@@ -125,10 +155,9 @@ int check_run_if_builtin(char **args, int argument_count, char *string,
 		print_environment(envp);
 		break;
 	case 1:
-		exit_shell(args, string, execution_path, envp);
+		exit_shell(args, string, execution_path, envp, shell_name, command_count);
 		break;
 	default:
-		built_in_to_exec = -1;
 		break;
 	}
 

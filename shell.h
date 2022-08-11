@@ -38,12 +38,12 @@ char **create_args(char *string, int *argument_count);
 
 void take_input(char **str, char **execuption_path,
 	int if_terminal, char **envp);
-void exit_shell(char **args, char *string, char **execution_path, char **envp);
 void _puts(char *str);
 int _putchar(char c);
 void print_environment(char **envp);
 int check_run_if_builtin(char **args, int argument_count, char *string,
-	char **execution_path, char **envp);
+	char **execution_path, char **envp, char *shell_name,
+		int command_count);
 char **create_env(char **env);
 void free_env(char **env);
 char *_strstr(char *haystack, char *needle);
@@ -54,6 +54,11 @@ void print_error(char *shellname, int command_count, char **args, int where);
 char *_itoa(unsigned int n);
 int intlen(int num);
 void array_rev(char *arr, int len);
+int _isalpha(int c);
+void exit_shell(char **args, char *string, char **execution_path,
+	char **envp, char *shell_name, int command_count);
+
+int _atoi(char *s);
 
 #endif
 

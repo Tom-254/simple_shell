@@ -1,0 +1,17 @@
+a.out
+AUTHORS
+compile_run_c.sh
+create_shell.sh
+git_helper.sh
+hsh
+more_strings.c
+README.md
+shell_builtins.c
+shell.c
+shell_executions.c
+shell_getline.c
+shell.h
+shell_paths.c
+shell_strings.c
+text.sh
+text.txt

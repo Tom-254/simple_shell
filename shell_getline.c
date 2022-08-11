@@ -70,12 +70,11 @@ void print_error(char *shellname, int command_count, char **args, int where)
 	{
 		_puts(": Illegal argument: ");
 		_puts(args[1]);
-		_puts("\n");
 	}
 	else
 	{
 		_puts(args[0]);
-		_puts(": not found\n");
+		_puts(": not found");
 	}
 }
 

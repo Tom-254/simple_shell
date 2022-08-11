@@ -146,7 +146,6 @@ char *getinput(char **execuption_path, char **envp)
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == 0)
 		{
-			_puts("\n");
 			free(execuption_path);
 			free_env(envp);
 			free(buff);

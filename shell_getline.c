@@ -1,6 +1,79 @@
 #include "shell.h"
 
 /**
+ * intlen - Determine Length Of Int
+ * @num: Given Int
+ * Return: Length Of Int
+ */
+int intlen(int num)
+{
+	int len = 0;
+
+	while (num != 0)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
+}
+
+/**
+ * _itoa - Convert Integer To Char
+ * @n: Int To Convert
+ * Return: Char Pointer
+ */
+char *_itoa(unsigned int n)
+{
+	int len = 0, i = 0;
+	char *s;
+
+	len = intlen(n);
+	s = malloc(len + 1);
+	if (!s)
+		return (NULL);
+	*s = '\0';
+	while (n / 10)
+	{
+		s[i] = (n % 10) + '0';
+		n /= 10;
+		i++;
+	}
+	s[i] = (n % 10) + '0';
+	array_rev(s, len);
+	s[i + 1] = '\0';
+	return (s);
+}
+
+/**
+ * print_error - Display Error Based on Command and How Many Time Shell Looped
+ * @shellname: program name
+ * @command_count: Simple Shell Count Loop
+ * @args: arguments passed to the program
+ * @where: where the program was first run
+ * Return: Void
+ */
+void print_error(char *shellname, int command_count, char **args, int where)
+{
+	char *er;
+
+	_puts(shellname);
+	_puts(": ");
+	er = _itoa(command_count);
+	_puts(er);
+	free(er);
+	_puts(": ");
+	if (where == 2)
+	{
+		perror(args[0]);
+	}
+	else
+	{
+		_puts(args[0]);
+		_puts(": not found\n");
+	}
+}
+
+/**
  * _realloc - reallocates a memory block using malloc and free
  *
  * @ptr: pointer to the memory previously allocated with a call to

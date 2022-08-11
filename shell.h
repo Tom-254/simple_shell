@@ -50,7 +50,10 @@ char *_strstr(char *haystack, char *needle);
 char *create_path(char **envp);
 char *getinput(char **execuption_path, char **envp);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-
+void print_error(char *shellname, int command_count, char **args, int where);
+char *_itoa(unsigned int n);
+int intlen(int num);
+void array_rev(char *arr, int len);
 
 #endif
 

@@ -109,7 +109,7 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count) == 1)
-				_puts("yes");
+				print_error(argv[0], command_count, args, 1);
 		}
 		free(args);
 		free(string);

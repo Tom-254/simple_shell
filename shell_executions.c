@@ -105,8 +105,7 @@ int call_execve(char *program, char **args, char **envp,
 	{
 		if (execve(program, args, envp) == -1)
 		{
-			/*dprintf(STDERR_FILENO, "%s: %d: ", shell_name, command_count);*/
-			perror(args[0]);
+			print_error(shell_name, command_count, args, 2);
 			exit(2);
 		}
 	}

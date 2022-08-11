@@ -70,6 +70,7 @@ void print_error(char *shellname, int command_count, char **args, int where)
 	{
 		_puts("Illegal number: ");
 		_puts(args[1]);
+		_puts("\n");
 	}
 	else
 	{

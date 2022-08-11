@@ -132,7 +132,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  */
 char *getinput(char **execuption_path, char **envp, int status)
 {
-	int i, buffsize = 512, rd, space;
+	int i, buffsize = 512, rd, space, new_buffsize;
 	char c = 0;
 	char *buff;
 
@@ -146,11 +146,13 @@ char *getinput(char **execuption_path, char **envp, int status)
 
 	for (i = 0; c != EOF && c != '\n'; i++)
 	{
-		if (i >= buffsize)
+		if (i == buffsize)
 		{
-			buff = _realloc(buff, buffsize, buffsize + 1);
+			new_buffsize = buffsize * 2;
+			buff = _realloc(buff, buffsize, new_buffsize);
 			if (buff == NULL)
 				return (NULL);
+			buffsize = new_buffsize;
 		}
 		fflush(stdin);
 		rd = read(STDIN_FILENO, &c, 1);
@@ -159,17 +161,12 @@ char *getinput(char **execuption_path, char **envp, int status)
 		if (_isalpha(c) && !space)
 			space = 1;
 		buff[i] = c;
-		if (buff[0] == '\n')
-		{
-			free(buff);
-			return ("");
-		}
 	}
-	buff[i] = '\0';
-	if (!space)
+	if (!space || buff[0] == '\n')
 	{
 		free(buff);
 		return ("");
 	}
+	buff[i] = '\0';
 	return (buff);
 }

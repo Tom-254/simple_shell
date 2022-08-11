@@ -102,14 +102,15 @@ char **create_env(char **env)
  * Return: nothing
  */
 
-void print_environment(void)
+void print_environment(char **envp)
 {
 	int i;
 
 	i = 0;
-	while (environ[i] != NULL && environ)
+
+	while (envp[i] != NULL)
 	{
-		_puts(environ[i]);
+		_puts(envp[i]);
 		_puts("\n");
 		i++;
 	}
@@ -158,7 +159,7 @@ int check_run_if_builtin(char **args, int argument_count, char *string,
 	switch (built_in_to_exec)
 	{
 	case 0:
-		print_environment();
+		print_environment(envp);
 		break;
 	case 1:
 		exit_shell(args, string, execution_path, envp, shell_name, command_count);

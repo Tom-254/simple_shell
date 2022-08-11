@@ -148,7 +148,7 @@ int execute_args(char **args, char **execution_path, int array_size,
 
 	status = 1;
 
-	if (args[0][0] == '/')
+	if (args[0][0] == '/' || args[0][0] == '.')
 	{
 		if (check_if_file_exists(args[0]))
 		{

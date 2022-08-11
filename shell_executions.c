@@ -119,8 +119,6 @@ int call_execve(char *program, char **args, char **envp,
 		}
 	}
 
-	printf("%d", status_code);
-
 	return (status_code);
 }
 

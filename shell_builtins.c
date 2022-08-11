@@ -107,7 +107,7 @@ void print_environment(void)
 	int i;
 
 	i = 0;
-	while (environ[i] != NULL || !environ)
+	while (environ[i] != NULL && environ)
 	{
 		_puts(environ[i]);
 		_puts("\n");

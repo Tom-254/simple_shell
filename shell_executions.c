@@ -88,6 +88,9 @@ int call_execve(char *program, char **args, char **envp,
 	int wait_status;
 	int status_code;
 
+	(void)shell_name;
+	(void)command_count;
+
 	status_code = 0;
 
 	process_id = fork();
@@ -102,7 +105,7 @@ int call_execve(char *program, char **args, char **envp,
 	{
 		if (execve(program, args, envp) == -1)
 		{
-			dprintf(STDERR_FILENO, "%s: %d: ", shell_name, command_count);
+			/*dprintf(STDERR_FILENO, "%s: %d: ", shell_name, command_count);*/
 			perror(args[0]);
 			exit(2);
 		}

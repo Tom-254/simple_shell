@@ -55,41 +55,17 @@ char **realloc_exec_path(char **exec_path, size_t size)
  * @if_terminal: an integer showing if the commands were
  * passed from the terminal
  * @envp: environment variables
- * Return: an integer
+ * Return: nothing
  */
 
-int take_input(char **str, char ***execuption_path,
+void take_input(char **str, char **execuption_path,
 	int if_terminal, char **envp)
 {
-	size_t size;
-	ssize_t chars_read;
-
-	(void)envp;
-
-	size = 0;
 
 	if (if_terminal)
 		_puts("($) ");
 
-	chars_read = getline(str, &size, stdin);
-
-	if (chars_read < 0)
-	{
-		_puts("\n");
-		free(*(str));
-		free(*(execuption_path));
-		free_env(envp);
-		exit(0);
-	}
-
-	if (chars_read != 1)
-	{
-		return (0);
-	}
-	else
-	{
-		return (1);
-	}
+	*str = getinput(execuption_path, envp);
 }
 
 /**
@@ -109,8 +85,7 @@ int main(int argc, char *argv[], char *envp[])
 	int array_size, argument_count, if_terminal, command_count;
 
 	(void)argc;
-	string = NULL;
-	execution_path = NULL;
+	(void)command_count;
 	array_size = 10;
 	argument_count = 0;
 	if_terminal = isatty(fileno(stdin));
@@ -123,7 +98,8 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		command_count++;
-		if (take_input(&string, &execution_path, if_terminal, envp))
+		take_input(&string, execution_path, if_terminal, envp);
+		if (string[0] == '\0')
 			continue;
 
 		args = create_args(string, &argument_count);
@@ -133,15 +109,11 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count) == 1)
-			{
-				dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", argv[0],
-						command_count, args[0]);
-			}
+				_puts("yes");
 		}
 		free(args);
 		free(string);
 	}
-
 	return (0);
 }
 

@@ -106,7 +106,7 @@ int call_execve(char *program, char **args, char **envp,
 		if (execve(program, args, envp) == -1)
 		{
 			print_error(shell_name, command_count, args, 2);
-			exit(2);
+			exit(errno);
 		}
 	}
 	else
@@ -118,6 +118,8 @@ int call_execve(char *program, char **args, char **envp,
 			status_code = WEXITSTATUS(wait_status);
 		}
 	}
+
+	printf("%d", status_code);
 
 	return (status_code);
 }

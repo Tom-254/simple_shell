@@ -64,7 +64,7 @@ char *create_path(char **envp)
 
 	for (i = 0; envp[i] != NULL; i++)
 	{
-		if (_strstr(envp[i], "PATH"))
+		if (_strstr(envp[i], "PATH="))
 		{
 			return (envp[i]);
 		}

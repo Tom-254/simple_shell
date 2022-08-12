@@ -62,7 +62,6 @@ void exit_shell(char **args, char *string, char **execution_path,
 				*status = 2;
 				break;
 			}
-			printf("%d\n", errno);
 			free(args);
 			free(string);
 			free(execution_path);

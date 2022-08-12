@@ -130,7 +130,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * @status: exit_p status
  * Return: user input
  */
-char *getinput(char **execuption_path, char **envp, int status)
+char *getinput(char **execuption_path, char **envp, int *status)
 {
 	int i, buffsize = 512, rd, space, new_buffsize;
 	char c = 0;

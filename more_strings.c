@@ -24,10 +24,10 @@ int _putchar(char c, int error)
  * Return: user input
  */
 void free_buff(char **execuption_path, char **envp,
-	char *buff, int status)
+	char *buff, int *status)
 {
 	free(execuption_path);
 	free_env(envp);
 	free(buff);
-	exit(status);
+	exit(*status);
 }

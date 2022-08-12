@@ -33,7 +33,7 @@ void free_env(char **env)
  */
 
 void exit_shell(char **args, char *string, char **execution_path,
-	char **envp, char *shell_name, int command_count, int status)
+	char **envp, char *shell_name, int command_count, int *status)
 {
 	int statue, i = 0;
 
@@ -43,7 +43,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		free(string);
 		free(execution_path);
 		free_env(envp);
-		exit(status);
+		exit(*status);
 	}
 
 	while (args[1][i])
@@ -59,8 +59,10 @@ void exit_shell(char **args, char *string, char **execution_path,
 			if (statue < 0)
 			{
 				print_error(shell_name, command_count, args, 3);
+				*status = 2;
 				break;
 			}
+			printf("%d\n", errno);
 			free(args);
 			free(string);
 			free(execution_path);
@@ -136,7 +138,7 @@ void print_environment(char **envp)
 
 int check_run_if_builtin(char **args, int argument_count, char *string,
 	char **execution_path, char **envp, char *shell_name,
-		int command_count, int status)
+		int command_count, int *status)
 {
 	int built_in_total, built_in_to_exec, i;
 	char *built_ins[2];

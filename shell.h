@@ -38,18 +38,18 @@ int execute_args(char **args, char **execution_path, int array_size,
 char **create_args(char *string, int *argument_count);
 
 void take_input(char **str, char **execuption_path,
-	int if_terminal, char **envp, int status);
+	int if_terminal, char **envp, int *status);
 void _puts(char *str);
 int _putchar(char c, int error);
 void print_environment(char **envp);
 int check_run_if_builtin(char **args, int argument_count, char *string,
 	char **execution_path, char **envp, char *shell_name,
-		int command_count, int status);
+		int command_count, int *status);
 char **create_env(char **env);
 void free_env(char **env);
 char *_strstr(char *haystack, char *needle);
 char *create_path(char **envp);
-char *getinput(char **execuption_path, char **envp, int status);
+char *getinput(char **execuption_path, char **envp, int *status);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void print_error(char *shellname, int command_count, char **args, int where);
 char *_itoa(unsigned int n);
@@ -57,12 +57,12 @@ int intlen(int num);
 void array_rev(char *arr, int len);
 int _isalpha(int c);
 void exit_shell(char **args, char *string, char **execution_path,
-	char **envp, char *shell_name, int command_count, int status);
+	char **envp, char *shell_name, int command_count, int *status);
 
 int _atoi(char *s);
 
 void free_buff(char **execuption_path, char **envp,
-	char *buff, int status);
+	char *buff, int *status);
 void _puts_error(char *str);
 
 #endif

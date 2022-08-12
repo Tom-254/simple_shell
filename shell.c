@@ -79,7 +79,7 @@ char **realloc_exec_path(char **exec_path, size_t size)
  */
 
 void take_input(char **str, char **execuption_path,
-	int if_terminal, char **envp, int status)
+	int if_terminal, char **envp, int *status)
 {
 
 	if (if_terminal)
@@ -118,13 +118,13 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		command_count++;
-		take_input(&string, execution_path, if_terminal, envp, status);
+		take_input(&string, execution_path, if_terminal, envp, &status);
 		if (string[0] == '\0')
 			continue;
 
 		args = create_args(string, &argument_count);
 		if (check_run_if_builtin(args, argument_count, string,
-			execution_path, envp, argv[0], command_count, status) == -1)
+			execution_path, envp, argv[0], command_count, &status) == -1)
 		{
 			status = execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count);

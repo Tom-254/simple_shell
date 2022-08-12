@@ -28,9 +28,7 @@ char **create_execution_path(int *size, char **envp)
 
 	path_string = create_path(envp);
 
-	token = strtok(path_string, ":");
-	execution_path[i] = token;
-	i++;
+	token = strtok(path_string, "=");
 	while (token != NULL)
 	{
 		if (i == *size)

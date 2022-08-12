@@ -1,6 +1,25 @@
 #include "shell.h"
 
 /**
+ * _puts_error - prints out a string, followed by a new line
+ *
+ * @str: the string to be printed out
+ *
+ * Return: the string
+ */
+
+void _puts_error(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0')
+	{
+		_putchar(str[i], -1);
+		i++;
+	}
+}
+
+/**
  * _puts - prints out a string, followed by a new line
  *
  * @str: the string to be printed out
@@ -14,7 +33,7 @@ void _puts(char *str)
 
 	while (str[i] != '\0')
 	{
-		_putchar(str[i]);
+		_putchar(str[i], 1);
 		i++;
 	}
 }

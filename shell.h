@@ -40,7 +40,7 @@ char **create_args(char *string, int *argument_count);
 void take_input(char **str, char **execuption_path,
 	int if_terminal, char **envp, int status);
 void _puts(char *str);
-int _putchar(char c);
+int _putchar(char c, int error);
 void print_environment(char **envp);
 int check_run_if_builtin(char **args, int argument_count, char *string,
 	char **execution_path, char **envp, char *shell_name,
@@ -63,6 +63,7 @@ int _atoi(char *s);
 
 void free_buff(char **execuption_path, char **envp,
 	char *buff, int status);
+void _puts_error(char *str);
 
 #endif
 

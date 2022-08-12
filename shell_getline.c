@@ -56,27 +56,27 @@ void print_error(char *shellname, int command_count, char **args, int where)
 {
 	char *er;
 
-	_puts(shellname);
-	_puts(": ");
+	_puts_error(shellname);
+	_puts_error(": ");
 	er = _itoa(command_count);
-	_puts(er);
+	_puts_error(er);
 	free(er);
-	_puts(": ");
+	_puts_error(": ");
 	if (where == 2)
 	{
 		perror(args[0]);
 	}
 	else if (where == 3)
 	{
-		_puts("exit: Illegal number: ");
-		_puts(args[1]);
-		_puts("\n");
+		_puts_error("exit: Illegal number: ");
+		_puts_error(args[1]);
+		_puts_error("\n");
 	}
 	else
 	{
-		_puts(args[0]);
-		_puts(": not found");
-		_puts("\n");
+		_puts_error(args[0]);
+		_puts_error(": not found");
+		_puts_error("\n");
 	}
 }
 

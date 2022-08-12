@@ -109,10 +109,9 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			status = execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count);
-			if (status == 1)
+			if (status == 127)
 			{
 				print_error(argv[0], command_count, args, 1);
-				status = 2;
 			}
 		}
 		free(args);

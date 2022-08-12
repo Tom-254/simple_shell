@@ -146,7 +146,7 @@ int execute_args(char **args, char **execution_path, int array_size,
 	int i;
 	int status;
 
-	status = 1;
+	status = 127;
 
 	if (args[0][0] == '/' || args[0][0] == '.')
 	{

@@ -51,6 +51,7 @@ void exit_shell(char **args, char *string, char **execution_path,
 		if (_isalpha(args[1][i++]) != 0)
 		{
 			print_error(shell_name, command_count, args, 3);
+			*status = 2;
 			break;
 		}
 		else

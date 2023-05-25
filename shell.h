@@ -43,7 +43,7 @@ void _puts(char *str);
 int _putchar(char c, int error);
 void print_environment(char **envp);
 int check_run_if_builtin(char **args, int argument_count, char *string,
-	char **execution_path, char **envp, char *shell_name,
+	char **execution_path, char ***envp, char *shell_name,
 		int command_count, int *status);
 char **create_env(char **env);
 void free_env(char **env);
@@ -58,12 +58,13 @@ void array_rev(char *arr, int len);
 int _isalpha(int c);
 void exit_shell(char **args, char *string, char **execution_path,
 	char **envp, char *shell_name, int command_count, int *status);
-
 int _atoi(char *s);
 
 void free_buff(char **execuption_path, char **envp,
 	char *buff, int *status);
 void _puts_error(char *str);
+char **_unsetenv(char **env);
+char **_setenv(char ***env, char **args);
 
 #endif
 

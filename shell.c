@@ -124,7 +124,7 @@ int main(int argc, char *argv[], char *envp[])
 
 		args = create_args(string, &argument_count);
 		if (check_run_if_builtin(args, argument_count, string,
-			execution_path, envp, argv[0], command_count, &status) == -1)
+			execution_path, &envp, argv[0], command_count, &status) == -1)
 		{
 			status = execute_args(args, execution_path, array_size, envp, argv[0],
 						command_count);

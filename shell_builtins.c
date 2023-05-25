@@ -137,18 +137,19 @@ void print_environment(char **envp)
  */
 
 int check_run_if_builtin(char **args, int argument_count, char *string,
-	char **execution_path, char **envp, char *shell_name,
+	char **execution_path, char ***envp, char *shell_name,
 		int command_count, int *status)
 {
 	int built_in_total, built_in_to_exec, i;
-	char *built_ins[2];
+	char *built_ins[3];
 
 	built_ins[0] = "env";
 	built_ins[1] = "exit";
+	built_ins[2] = "setenv";
 
 	(void)argument_count;
 
-	built_in_total = 2;
+	built_in_total = 3;
 	built_in_to_exec = -1;
 
 	for (i = 0; i < built_in_total; i++)
@@ -163,12 +164,14 @@ int check_run_if_builtin(char **args, int argument_count, char *string,
 	switch (built_in_to_exec)
 	{
 	case 0:
-		print_environment(envp);
+		print_environment(*envp);
 		break;
 	case 1:
-		exit_shell(args, string, execution_path, envp,
+		exit_shell(args, string, execution_path, *envp,
 			shell_name, command_count, status);
 		break;
+	case 2:
+		*envp = _setenv(envp, args);
 	default:
 		break;
 	}
